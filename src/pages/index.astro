@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="Fortywide">
+  <div class="index-content framed">
+    <h1 id="hello-there">Hello!</h1>
+    <p>My name is Ed Balasingham, and I go by Fortywide online.</p>
+    <p>I am a 17 year old junior at Piedmont High School. In addition, I am proficient in Python, C++, C, C#, and Java. I also design using Onshape for FRC team 8033, Highlander Robotics</p>
+    <!-- <p>I also play modern Tetris on Tetr.io and Jstris. I am top 1000 in the United States </p> -->
+  </div> 
+  <div class="posts">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</BaseLayout>
